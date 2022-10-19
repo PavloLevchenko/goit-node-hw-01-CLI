@@ -37,7 +37,7 @@ export async function removeContact(contactId) {
       const newContacts = contactsArr.filter(
         (contact) => contact.id != contactId
       );
-      const jsonString = JSON.stringify(newContacts);
+      const jsonString = JSON.stringify(newContacts, " ", 2);
       await writeFile(contactsPath, jsonString);
     }
     return JSON.stringify(contact);
@@ -53,7 +53,7 @@ export async function addContact(name, email, phone) {
     const contact = { id: nanoid(), name, email, phone };
     const contactsStr = await readFile(contactsPath);
     const contactsArr = JSON.parse(contactsStr);
-    const jsonString = JSON.stringify([...contactsArr, contact]);
+    const jsonString = JSON.stringify([...contactsArr, contact], " ", 2);
     await writeFile(contactsPath, jsonString);
     return JSON.stringify(contact);
   } catch (err) {
