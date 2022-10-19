@@ -51,10 +51,9 @@ Writes changed Contacts to the file. Returns added contact as a JSON string. */
 export async function addContact(name, email, phone) {
   try {
     const contact = { id: nanoid(), name, email, phone };
-    const contacts = await readFile(contactsPath);
-    const newContacts = JSON.parse(contacts);
-    newContacts.push(contact);
-    const jsonString = JSON.stringify(newContacts);
+    const contactsStr = await readFile(contactsPath);
+    const contactsArr = JSON.parse(contactsStr);
+    const jsonString = JSON.stringify([...contactsArr, contact]);
     await writeFile(contactsPath, jsonString);
     return JSON.stringify(contact);
   } catch (err) {
